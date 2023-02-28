@@ -1,0 +1,16 @@
+const controller = require("../controller/db.controller")
+const upload = require('../middleware/upload.middleware')
+const express = require ("express")
+const userModel = require("../model/user-model")
+const middleware = require("../middleware/db.middleware")
+const multer = require("../middleware/upload.middleware")
+// const multer = require("multer")
+const app = express()
+
+app.post('/signup', controller.signup)
+app.post('/login', controller.login)
+app.post('/uploadImage',middleware.authenticateToken,multer.single("profilepic"),controller.Image)
+app.get('/Profile',middleware.authenticateToken,controller.users)
+// app.put('/Setting', middleware.authenticateToken, controller.updateUser)
+app.put('/update', middleware.authenticateToken, controller.updateUser)
+module.exports = app;
